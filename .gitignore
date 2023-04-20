@@ -107,5 +107,4 @@ venv.bak/
 # postres files for local developemnt
 
 .pgdata
-db.sqlite3
 .idea
