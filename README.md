@@ -46,6 +46,7 @@ pip install -r requirements.txt
   - [Pipenv](https://pipenv.pypa.io/en/latest/)
 - API:
   - [Editacodigo](https://editacodigo.com.br)
+  - [Openai](https://openai.com/blog/openai-api/)
 - Frameworks:
   - [Django](https://www.djangoproject.com/) -------->Ainda em desenvolvimento
 - Deploy:
