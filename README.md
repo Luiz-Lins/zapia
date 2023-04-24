@@ -1,17 +1,25 @@
 # Zapia
-Bot para Whatsapp com python pra fazer vendas e atendimento
+
+Bot para Whatsapp com Python para vendas e atendimento.
+
 [![Languages](https://img.shields.io/github/languages/count/GermanUngo/Curso_Django_2.0)]()
 [![Repo Size](https://img.shields.io/github/repo-size/GermanUngo/Curso_Django_2.0)]()
 
+Este projeto utiliza a API do OpenAI e a tecnologia do ChatGPT3 para comunicação.
 
-Abordado a construção de projetos utilizando o Framework [Django](https://www.djangoproject.com/) para python no back-end e front-end.
+## Requisitos
 
-## Requerimentos:
-- Ter a versão 3.11.3 do python instalada no notebook ou pc.
-- Ter o [pipenv](https://pipenv.pypa.io/en/latest/) instalado.
+- Versão 3.11.3 do Python instalada no computador ou notebook.
+- [pipenv](https://pipenv.pypa.io/en/latest/) instalado.
 
-```python {data-filename="requirements.txt"}
+```python
 pip install pipenv
+```
+## Instalação
+
+Clone o repositório para o seu computador:
+```
+git clone https://github.com/GermanUngo/Zapia.git
 ```
 
 Criar o ambiente virtual na pasta do projeto e instalar os requirements:
@@ -25,41 +33,40 @@ pipenv shell
 - Instalar somente as dependências de desenvolvimento:
 
 ```python {data-filename="requirements.txt"}
-pipenv sync -d
+pip install -r requirements.txt
 ```
 
 ## Verificar qualidade de código:
 - [flake8](https://flake8.pycqa.org/en/latest/)
 
 ## Ferramentas utilizadas:
+
+
 - Ambiente virtual:
   - [Pipenv](https://pipenv.pypa.io/en/latest/)
+- API:
+  - [Editacodigo](https://editacodigo.com.br)
 - Frameworks:
-  - [Django](https://www.djangoproject.com/)
-  - [Bootstrap](https://getbootstrap.com/)
+  - [Django](https://www.djangoproject.com/) -------->Ainda em desenvolvimento
 - Deploy:
   - [Git](https://git-scm.com/)
-  - [Fly.io](https://fly.io)
-  - [AWS](https://aws.amazon.com/)
-  - [django-s3-folder-storage](https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#module-django_storages.backends.s3boto3)
-  - [Collectfast](https://github.com/antonagestam/collectfast)
+  - [Fly.io](https://fly.io) -------->Ainda em desenvolvimento
+  - [AWS](https://aws.amazon.com/) -------->Ainda em desenvolvimento
+  - [django-s3-folder-storage](https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#module-django_storages.backends.s3boto3) -------->Ainda em desenvolvimento
+  - [Collectfast](https://github.com/antonagestam/collectfast) -------->Ainda em desenvolvimento
 - Testes e qualidade do código:
-  - [PyTest](https://pytest.org/)
-  - [PyTest-Cov](https://pytest-cov.readthedocs.io/en/latest/)
-  - [Pytest-Mock](https://pypi.org/project/pytest-mock/)
-  - [Pytest-Django](https://pytest-django.readthedocs.io/en/latest/)
-  - [Django-Debug-Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/)
-- Gestão da atualização de dependências:
-  - [PyUp](https://pyup.io/)
+  - [PyTest](https://pytest.org/) -------->Ainda em desenvolvimento
+  - [PyTest-Cov](https://pytest-cov.readthedocs.io/en/latest/) -------->Ainda em desenvolvimento
+  - [Pytest-Mock](https://pypi.org/project/pytest-mock/) -------->Ainda em desenvolvimento
+  - [Pytest-Django](https://pytest-django.readthedocs.io/en/latest/) -------->Ainda em desenvolvimento
+  - [Django-Debug-Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/) -------->Ainda em desenvolvimento
 - Monitoramento de erros:
-  - [Sentry](https://sentry.io/welcome/)
-- Envio de emails:
-  - [Mailchimp](https://mailchimp.com/)
+  - [Sentry](https://sentry.io/welcome/) -------->Ainda em desenvolvimento
+
 
 ## Licença
 
-Este projeto é licenciado sobre a licença MIT veja [LICENSE](LICENSE) para mais informações.
+Este projeto é licenciado sobre a licença  AGPL-3.0 veja [LICENSE](https://github.com/GermanUngo/Zapia/blob/main/LICENSE/) para mais informações.
 
-## Acknowledgments
 
 
