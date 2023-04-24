@@ -22,9 +22,9 @@ api = requests.get("https://editacodigo.com.br/index/api-whatsapp/gyGAjVhzbR9CYb
 time.sleep(1)
 api = api.text
 api = api.split(".n.")
-elem_notif = api[3].strip()
-contact_client = api[4].strip()
-box_msg = api[5].strip()
+bolinha_notificacao = api[3].strip()
+contato_cliente = api[4].strip()
+caixa_msg = api[5].strip()
 msg_client = api[6].strip()
 
 ##########################################
@@ -34,28 +34,40 @@ time.sleep(10)
 def bot():
     try:
         #        ######PEGAR A MENSAGEM E CLICAR NELA######
-        notif = driver.find_element(By.CLASS_NAME, elem_notif)
-        notif = driver.find_elements(By.CLASS_NAME, elem_notif)
-        click_notif = notif[-1]
-        act_notif = webdriver.common.action_chains.ActionChains(driver)
-        act_notif.move_to_element_with_offset(click_notif, 0, -20)
-        act_notif.click()
-        act_notif.perform()
+        bolinha = driver.find_element(By.CLASS_NAME,bolinha_notificacao)
+        bolinha = driver.find_elements(By.CLASS_NAME,bolinha_notificacao)
+        clica_bolinha = bolinha[-1]
+        acao_bolinha =  webdriver.common.action_chains.ActionChains(driver)
+        acao_bolinha.move_to_element_with_offset(clica_bolinha,0,-20)
+        acao_bolinha.click()
+        acao_bolinha.perform()
+        acao_bolinha.click()
+        acao_bolinha.perform()
 
         ################LER A NOVA MENSAGEM _21Ahp
+
         todas_as_msg = driver.find_elements(By.CLASS_NAME, msg_client)
         todas_as_msg_texto = [e.text for e in todas_as_msg]
         msg = todas_as_msg_texto[-1]
         print(msg)
         time.sleep(5)
 
+        cliente = 'mensagem do cliente:'
+        texto2 = 'Responda a mensagem do cliente com base no proximo texto'
+        texto = 'explique tudo sobre hotel Copacabana Palace Endereço: Av. Atlântica, 1111 - ' \
+                'Copacabana, Rio de Janeiro -RJ, 22021-111 Telefone: (21) 2548-1111, resevas por email ' \
+                ' reserva@email.com, aceitamos todas as formas de pagamentos'
+        questao = cliente + msg + texto2 + texto
+
+
+
         ################PROCESSA A MENSAGEM NA API ia
 
-        openai.api_key = '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'
+        openai.api_key = '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'
 
         response = openai.Completion.create(
             model="text-davinci-003",
-            prompt=msg,
+            prompt=questao,
             temperature=0.7,
             max_tokens=256,
             top_p=1,
@@ -67,14 +79,15 @@ def bot():
         time.sleep(3)
 
         # RESPONDE A MSG
-        campo_de_texto = driver.find_element(By.XPATH,box_msg)
+        campo_de_texto = driver.find_element(By.XPATH, caixa_msg)
         campo_de_texto.click()
         time.sleep(3)
-        campo_de_texto.send_keys(resposta, Keys.ENTER)
+        campo_de_texto.send_keys(resposta,Keys.ENTER)
         time.sleep(2)
 
         # FECHA O CONTATO
 
+        webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
 
 
 
