@@ -4,66 +4,70 @@ import os
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from dotenv import load_dotenv
 import requests
 import openai
+
+
+# Configurações do Chrome
 
 dir_path = os.getcwd()
 chrome_options2 = Options()
 chrome_options2.add_argument(r"user-data-dir=" + dir_path + "profile/zap")
-driver = webdriver.Chrome(options=chrome_options2)
+driver = webdriver.Chrome(chrome_options=chrome_options2)
 driver.get('https://web.whatsapp.com')
 
-#######API DO EDITACODIGO##########################################
+# API do Editacodigo
 
-agent = {
-    "User-Agent": 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 '
-                  'Safari/537.36'}
-api = requests.get("https://editacodigo.com.br/index/api-whatsapp/gyGAjVhzbR9CYbdXcKY1mFdeDvW2CHfj", headers=agent)
+agent = {"User-Agent": 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                       'Chrome/59.0.3071.115 Safari/537.36'}
+api = requests.get("https://editacodigo.com.br/index/api-whatsapp/x0YJ8Cww908JtO6LTJmQAvaCVkz4sNXk" ,  headers=agent)
 time.sleep(1)
 api = api.text
 api = api.split(".n.")
 bolinha_notificacao = api[3].strip()
 contato_cliente = api[4].strip()
 caixa_msg = api[5].strip()
-msg_client = api[6].strip()
+msg_cliente = api[6].strip()
 
 ##########################################
 time.sleep(10)
+##########################################
 
 
 def bot():
     try:
-        #        ######PEGAR A MENSAGEM E CLICAR NELA######
-        bolinha = driver.find_element(By.CLASS_NAME,bolinha_notificacao)
-        bolinha = driver.find_elements(By.CLASS_NAME,bolinha_notificacao)
+        # Clica na última notificação recebida
+        bolinha = driver.find_element(By.CLASS_NAME, bolinha_notificacao)
+        bolinha = driver.find_elements(By.CLASS_NAME, bolinha_notificacao)
         clica_bolinha = bolinha[-1]
-        acao_bolinha =  webdriver.common.action_chains.ActionChains(driver)
-        acao_bolinha.move_to_element_with_offset(clica_bolinha,0,-20)
+        acao_bolinha = webdriver.common.action_chains.ActionChains(driver)
+        acao_bolinha.move_to_element_with_offset(clica_bolinha, 0, -20)
         acao_bolinha.click()
         acao_bolinha.perform()
         acao_bolinha.click()
         acao_bolinha.perform()
 
-        ################LER A NOVA MENSAGEM _21Ahp
+        # Obtém o telefone do cliente
+        telefone_cliente = driver.find_element(By.XPATH, '//*[@id="main"]/header/div[2]/div/div/span').text
+        print(telefone_cliente)
 
+        # Obtém a mensagem do cliente
         todas_as_msg = driver.find_elements(By.CLASS_NAME, msg_client)
         todas_as_msg_texto = [e.text for e in todas_as_msg]
         msg = todas_as_msg_texto[-1]
         print(msg)
-        time.sleep(5)
+
+        # Processa a mensagem na API da OpenAI
 
         cliente = 'mensagem do cliente:'
-        texto2 = 'Responda a mensagem do cliente com base no proximo texto'
+        texto2 = 'Responda a mensagem do cliente com base no proximo texto.'
         texto = 'explique tudo sobre hotel Copacabana Palace Endereço: Av. Atlântica, 1111 - ' \
                 'Copacabana, Rio de Janeiro -RJ, 22021-111 Telefone: (21) 2548-1111, resevas por email ' \
                 ' reserva@email.com, aceitamos todas as formas de pagamentos'
         questao = cliente + msg + texto2 + texto
 
-
-
-        ################PROCESSA A MENSAGEM NA API ia
-
-        openai.api_key = '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'
+        openai.api_key = os.environ.get("OPENAI_ACCESS_KEY_ID")
 
         response = openai.Completion.create(
             model="text-davinci-003",
@@ -78,24 +82,20 @@ def bot():
         print(resposta)
         time.sleep(3)
 
-        # RESPONDE A MSG
+        # Responde a mensagem
         campo_de_texto = driver.find_element(By.XPATH, caixa_msg)
         campo_de_texto.click()
         time.sleep(3)
         campo_de_texto.send_keys(resposta,Keys.ENTER)
         time.sleep(2)
 
-        # FECHA O CONTATO
-
+        # Fecha a janela de conversa
         webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
-
-
-
-
 
     except:
         print('buscando novas notificações')
 
+# Executa o bot indefinidamente
 
 while True:
     bot()
