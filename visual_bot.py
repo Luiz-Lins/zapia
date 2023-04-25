@@ -11,7 +11,7 @@ import PySimpleGUI as Sg
 
 agent = {"User-Agent": 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
                        'Chrome/59.0.3071.115 Safari/537.36'}
-api = requests.get("https://editacodigo.com.br/index/api-whatsapp/x0YJ8Cww908JtO6LTJmQAvaCVkz4sNXk" ,  headers=agent)
+api = requests.get("https://editacodigo.com.br/index/api-whatsapp/gyGAjVhzbR9CYbdXcKY1mFdeDvW2CHfj" ,  headers=agent)
 time.sleep(1)
 api = api.text
 api = api.split(".n.")
@@ -52,7 +52,7 @@ while True:
         break
     if event == 'ENTRAR':
         senha = values['senha']
-        if senha == token2 :
+        if senha == token1 :
             windows1.close()
             event2, values2 = windows2.read()
 
