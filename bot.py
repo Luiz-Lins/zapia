@@ -4,9 +4,11 @@ import os
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from dotenv import load_dotenv
 import requests
 import openai
+from dotenv import load_dotenv
+
+
 
 
 # Configurações do Chrome
@@ -21,7 +23,7 @@ driver.get('https://web.whatsapp.com')
 
 agent = {"User-Agent": 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
                        'Chrome/59.0.3071.115 Safari/537.36'}
-api = requests.get("https://editacodigo.com.br/index/api-whatsapp/x0YJ8Cww908JtO6LTJmQAvaCVkz4sNXk" ,  headers=agent)
+api = requests.get("https://editacodigo.com.br/index/api-whatsapp/gyGAjVhzbR9CYbdXcKY1mFdeDvW2CHfj",  headers=agent)
 time.sleep(1)
 api = api.text
 api = api.split(".n.")
@@ -48,12 +50,10 @@ def bot():
         acao_bolinha.click()
         acao_bolinha.perform()
 
-        # Obtém o telefone do cliente
-        telefone_cliente = driver.find_element(By.XPATH, '//*[@id="main"]/header/div[2]/div/div/span').text
-        print(telefone_cliente)
+
 
         # Obtém a mensagem do cliente
-        todas_as_msg = driver.find_elements(By.CLASS_NAME, msg_client)
+        todas_as_msg = driver.find_elements(By.CLASS_NAME, msg_cliente)
         todas_as_msg_texto = [e.text for e in todas_as_msg]
         msg = todas_as_msg_texto[-1]
         print(msg)
@@ -67,7 +67,9 @@ def bot():
                 ' reserva@email.com, aceitamos todas as formas de pagamentos'
         questao = cliente + msg + texto2 + texto
 
-        openai.api_key = os.environ.get("OPENAI_ACCESS_KEY_ID")
+        # Carrega as variáveis de ambiente do arquivo .env
+        load_dotenv()
+        openai.api_key = os.getenv('OPENAI_ACCESS_KEY_ID')
 
         response = openai.Completion.create(
             model="text-davinci-003",
@@ -80,7 +82,7 @@ def bot():
         )
         resposta = response['choices'][0]['text']
         print(resposta)
-        time.sleep(3)
+        time.sleep(2)
 
         # Responde a mensagem
         campo_de_texto = driver.find_element(By.XPATH, caixa_msg)
@@ -94,6 +96,7 @@ def bot():
 
     except:
         print('buscando novas notificações')
+        time.sleep(3)
 
 # Executa o bot indefinidamente
 
