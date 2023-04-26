@@ -1,6 +1,7 @@
 from selenium import webdriver
 import time
 import os
+import sys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -90,7 +91,15 @@ def bot():
 
 # INTERFASE
 
-imagem = Sg.Image(filename='ZAPIA.png', key='-IMAGE-')
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
+
+img_path = resource_path('ZAPIA.png')
+
+imagem = Sg.Image(filename=img_path, key='-IMAGE-')
 
 
 tela1 = [
