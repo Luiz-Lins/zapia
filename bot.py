@@ -6,35 +6,26 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import requests
 import openai
+import PySimpleGUI as Sg
 from dotenv import load_dotenv
 
-
-
-
-# Configurações do Chrome
-
-dir_path = os.getcwd()
-chrome_options2 = Options()
-chrome_options2.add_argument(r"user-data-dir=" + dir_path + "profile/zap")
-driver = webdriver.Chrome(chrome_options=chrome_options2)
-driver.get('https://web.whatsapp.com')
-
-# API do Editacodigo
+# API DO EDITACODIGO
 
 agent = {"User-Agent": 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
                        'Chrome/59.0.3071.115 Safari/537.36'}
-api = requests.get("https://editacodigo.com.br/index/api-whatsapp/gyGAjVhzbR9CYbdXcKY1mFdeDvW2CHfj",  headers=agent)
+api = requests.get("https://editacodigo.com.br/index/api-whatsapp/gyGAjVhzbR9CYbdXcKY1mFdeDvW2CHfj" ,  headers=agent)
 time.sleep(1)
 api = api.text
 api = api.split(".n.")
+token1 = api[0].strip()
+token2 = api[1].strip()
+token3 = api[2].strip()
 bolinha_notificacao = api[3].strip()
 contato_cliente = api[4].strip()
 caixa_msg = api[5].strip()
 msg_cliente = api[6].strip()
 
-##########################################
-time.sleep(10)
-##########################################
+# BOT
 
 
 def bot():
@@ -62,14 +53,12 @@ def bot():
 
         cliente = 'mensagem do cliente:'
         texto2 = 'Responda a mensagem do cliente com base no proximo texto.'
-        texto = 'explique tudo sobre hotel Copacabana Palace Endereço: Av. Atlântica, 1111 - ' \
-                'Copacabana, Rio de Janeiro -RJ, 22021-111 Telefone: (21) 2548-1111, resevas por email ' \
-                ' reserva@email.com, aceitamos todas as formas de pagamentos'
+
         questao = cliente + msg + texto2 + texto
 
         # Carrega as variáveis de ambiente do arquivo .env
         load_dotenv()
-        openai.api_key = os.getenv('OPENAI_ACCESS_KEY_ID')
+        openai.api_key = apiopenai.strip()
 
         response = openai.Completion.create(
             model="text-davinci-003",
@@ -98,7 +87,72 @@ def bot():
         print('buscando novas notificações')
         time.sleep(3)
 
-# Executa o bot indefinidamente
+
+# INTERFASE
+
+imagem = Sg.Image(filename='ZAPIA.png', key='-IMAGE-')
+
+
+tela1 = [
+    [Sg.Column([[imagem]], justification='center')],
+    [Sg.Text('SENHA')],
+    [Sg.Input(key='senha', password_char='*')],
+    [Sg.Button('ENTRAR')],
+    [Sg.Text('',key='mensagem')],
+
+
+
+]
+
+
+tela2 = [
+    [Sg.Text('BEM VINDO A ZAPIA \n BOT DE INTELIGENCIA ARTIFICIAL', justification='center')],
+    [Sg.Text('Insira a API da OPENAI')],
+    [Sg.Input(key='apiopenai')],
+    [Sg.Multiline(size=(80, 20), key='texto')],
+    [Sg.Text('TENHA O CELULAR EM MÃOS')],
+    [Sg.Text('CLIQUE ABAIXO PARA CAPTURAR O QRCODE')],
+    [Sg.Button('CAPTURAR QRCODE')],
+
+
+
+]
+
+windows1 = Sg.Window('ZAPIA', layout=tela1)
+windows2 = Sg.Window('ZAPIA', layout=tela2)
+
 
 while True:
-    bot()
+    event, values = windows1.read()
+    if event == Sg.WIN_CLOSED:
+        break
+    if event == 'ENTRAR':
+        senha = values['senha']
+        if senha == token1 :
+            windows1.close()
+            event2, values2 = windows2.read()
+            if event2 == 'CAPTURAR QRCODE':
+                apiopenai = values2['apiopenai']
+                texto = values2['texto']
+                windows2.close()
+                dir_path = os.getcwd()
+                chrome_options2 = Options()
+                chrome_options2.add_argument(r"user-data-dir=" + dir_path + "profile/zap")
+                driver = webdriver.Chrome(chrome_options=chrome_options2)
+                driver.get('https://web.whatsapp.com')
+                time.sleep(10)
+                while True:
+                    bot()
+
+            if event2 == Sg.WIN_CLOSED:
+                break
+
+        else:
+            windows1['mensagem'].update('ERRO DE SENHA')
+
+
+
+
+
+
+
