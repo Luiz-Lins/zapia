@@ -12,7 +12,8 @@ Este projeto utiliza a API do OpenAI e a tecnologia do ChatGPT3 para comunicaç�
 - Versão 3.11.3 do Python instalada no computador ou notebook.
 - [pipenv](https://pipenv.pypa.io/en/latest/) instalado.
 
-```python
+
+``` python
 pip install pipenv
 ```
 ## Instalação
@@ -35,9 +36,20 @@ pipenv shell
 ```python {data-filename="requirements.txt"}
 pip install -r requirements.txt
 ```
+-Criar um ".env" para guardar a key da [API]( https://platform.openai.com/account/api-keys/) fornecida pela Openai com o seguinte código:
 
-## Verificar qualidade de código:
-- [flake8](https://flake8.pycqa.org/en/latest/)
+```
+OPENAI_ACCESS_KEY_ID='key da openai'
+```
+
+- Instalar O Auto-Py-to-Exe 
+Para instalar o Auto-Py-to-Exe, é necessário ter o Python instalado em sua máquina. 
+Depois, abra o terminal do seu sistema operacional e digite o seguinte comando:
+
+
+```
+pip install auto-py-to-exe
+```
 
 ## Ferramentas utilizadas:
 
@@ -56,11 +68,14 @@ pip install -r requirements.txt
   - [django-s3-folder-storage](https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#module-django_storages.backends.s3boto3) -------->Ainda em desenvolvimento
   - [Collectfast](https://github.com/antonagestam/collectfast) -------->Ainda em desenvolvimento
 - Testes e qualidade do código:
+  - [flake8](https://flake8.pycqa.org/en/latest/)
   - [PyTest](https://pytest.org/) -------->Ainda em desenvolvimento
   - [PyTest-Cov](https://pytest-cov.readthedocs.io/en/latest/) -------->Ainda em desenvolvimento
   - [Pytest-Mock](https://pypi.org/project/pytest-mock/) -------->Ainda em desenvolvimento
   - [Pytest-Django](https://pytest-django.readthedocs.io/en/latest/) -------->Ainda em desenvolvimento
   - [Django-Debug-Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/) -------->Ainda em desenvolvimento
+- Conversor para executavel
+  - [Auto-Py-to-Exe](https://pypi.org/project/auto-py-to-exe/)
 - Monitoramento de erros:
   - [Sentry](https://sentry.io/welcome/) -------->Ainda em desenvolvimento
 
