@@ -9,6 +9,7 @@ import requests
 import openai
 import PySimpleGUI as Sg
 from dotenv import load_dotenv
+import csv
 
 # API DO EDITACODIGO
 
@@ -118,7 +119,7 @@ tela2 = [
     [Sg.Text('BEM VINDO A ZAPIA \n BOT DE INTELIGENCIA ARTIFICIAL', justification='center')],
     [Sg.Text('Insira a API da OPENAI')],
     [Sg.Input(key='apiopenai')],
-    [Sg.Multiline(size=(80, 20), key='texto')],
+    [Sg.Multiline(size=(10, 5), key='')],
     [Sg.Text('TENHA O CELULAR EM MÃOS')],
     [Sg.Text('CLIQUE ABAIXO PARA CAPTURAR O QRCODE')],
     [Sg.Button('CAPTURAR QRCODE')],
